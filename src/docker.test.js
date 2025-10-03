@@ -29,7 +29,7 @@ describe('getDockerTags', () => {
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:22e7c60-arm`, `${REPO}:${SHA}-arm`, `${REPO}:pr-${PR_ID}-arm`],
+      [`${REPO}:pr-${PR_ID}-arm`],
     ],
     [
       'ci',
@@ -38,7 +38,7 @@ describe('getDockerTags', () => {
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:22e7c60-ci`, `${REPO}:${SHA}-ci`, `${REPO}:pr-${PR_ID}-ci`],
+      [`${REPO}:pr-${PR_ID}-ci`],
     ],
     [
       'lean',
@@ -47,7 +47,7 @@ describe('getDockerTags', () => {
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:22e7c60`, `${REPO}:${SHA}`, `${REPO}:pr-${PR_ID}`],
+      [`${REPO}:pr-${PR_ID}`],
     ],
     [
       'dev',
@@ -57,8 +57,6 @@ describe('getDockerTags', () => {
       PR_ID,
       false,
       [
-        `${REPO}:22e7c60-dev-arm`,
-        `${REPO}:${SHA}-dev-arm`,
         `${REPO}:pr-${PR_ID}-dev-arm`,
       ],
     ],
@@ -69,7 +67,7 @@ describe('getDockerTags', () => {
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:22e7c60-dev`, `${REPO}:${SHA}-dev`, `${REPO}:pr-${PR_ID}-dev`, `${REPO}:GHA-123`],
+      [`${REPO}:pr-${PR_ID}-dev`],
     ],
     // old releases
     [
@@ -79,7 +77,7 @@ describe('getDockerTags', () => {
       'release',
       OLD_REL,
       false,
-      [`${REPO}:22e7c60-arm`, `${REPO}:${SHA}-arm`, `${REPO}:${OLD_REL}-arm`],
+      [`${REPO}:${OLD_REL}-arm`],
     ],
     [
       'lean',
@@ -88,7 +86,7 @@ describe('getDockerTags', () => {
       'release',
       OLD_REL,
       false,
-      [`${REPO}:22e7c60`, `${REPO}:${SHA}`, `${REPO}:${OLD_REL}`],
+      [`${REPO}:${OLD_REL}`],
     ],
     [
       'dev',
@@ -98,8 +96,6 @@ describe('getDockerTags', () => {
       OLD_REL,
       false,
       [
-        `${REPO}:22e7c60-dev-arm`,
-        `${REPO}:${SHA}-dev-arm`,
         `${REPO}:${OLD_REL}-dev-arm`,
       ],
     ],
@@ -110,7 +106,7 @@ describe('getDockerTags', () => {
       'release',
       OLD_REL,
       false,
-      [`${REPO}:22e7c60-dev`, `${REPO}:${SHA}-dev`, `${REPO}:${OLD_REL}-dev`],
+      [`${REPO}:${OLD_REL}-dev`],
     ],
     // new releases
     [
@@ -121,8 +117,6 @@ describe('getDockerTags', () => {
       NEW_REL,
       false,
       [
-        `${REPO}:22e7c60-arm`,
-        `${REPO}:${SHA}-arm`,
         `${REPO}:${NEW_REL}-arm`,
         `${REPO}:latest-arm`,
       ],
@@ -134,7 +128,7 @@ describe('getDockerTags', () => {
       'release',
       NEW_REL,
       false,
-      [`${REPO}:22e7c60`, `${REPO}:${SHA}`, `${REPO}:${NEW_REL}`, `${REPO}:latest`],
+      [`${REPO}:${NEW_REL}`, `${REPO}:latest`],
     ],
     [
       'dev',
@@ -144,8 +138,6 @@ describe('getDockerTags', () => {
       NEW_REL,
       false,
       [
-        `${REPO}:22e7c60-dev-arm`,
-        `${REPO}:${SHA}-dev-arm`,
         `${REPO}:${NEW_REL}-dev-arm`,
         `${REPO}:latest-dev-arm`,
       ],
@@ -158,8 +150,6 @@ describe('getDockerTags', () => {
       NEW_REL,
       false,
       [
-        `${REPO}:22e7c60-dev`,
-        `${REPO}:${SHA}-dev`,
         `${REPO}:${NEW_REL}-dev`,
         `${REPO}:latest-dev`,
       ],
@@ -172,7 +162,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:22e7c60-arm`, `${REPO}:${SHA}-arm`, `${REPO}:master-arm`],
+      [`${REPO}:master-arm`],
     ],
     [
       'lean',
@@ -181,7 +171,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:22e7c60`, `${REPO}:${SHA}`, `${REPO}:master`],
+      [`${REPO}:master`],
     ],
     [
       'dev',
@@ -191,8 +181,6 @@ describe('getDockerTags', () => {
       'master',
       false,
       [
-        `${REPO}:22e7c60-dev-arm`,
-        `${REPO}:${SHA}-dev-arm`,
         `${REPO}:master-dev-arm`,
       ],
     ],
@@ -203,7 +191,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:22e7c60-dev`, `${REPO}:${SHA}-dev`, `${REPO}:master-dev`],
+      [`${REPO}:master-dev`],
     ],
 
     [

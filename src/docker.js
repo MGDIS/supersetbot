@@ -1,6 +1,6 @@
 import * as utils from './utils.js';
 
-const REPO = 'apache/superset';
+const REPO = process.env.DOCKERHUB_REPO ?? 'apache/superset';
 const CACHE_REPO = `${REPO}-cache`;
 const BASE_PY_IMAGE = '3.10-slim-bookworm';
 
@@ -50,9 +50,6 @@ export function getDockerTags({
     }
   }
 
-  tags.add(makeDockerTag([sha, ...tagChunks]));
-  tags.add(makeDockerTag([sha.slice(0, 7), ...tagChunks]));
-
   if (buildContext === 'release') {
     tags.add(makeDockerTag([buildContextRef, ...tagChunks]));
   } else if (buildContext === 'push' && buildContextRef === 'master') {
@@ -64,9 +61,6 @@ export function getDockerTags({
     console.log(`Tags: ${[...tags].join(', ')}`);
     tags.add(makeDockerTag(['latest', ...tagChunks]));
     console.log('MAKE', makeDockerTag(['latest', ...tagChunks]));
-  }
-  if (process.env.GITHUB_RUN_ID) {
-    tags.add(makeDockerTag([`GHA-${process.env.GITHUB_RUN_ID}`]));
   }
 
   return [...tags];
