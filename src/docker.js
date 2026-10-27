@@ -38,7 +38,8 @@ export function getDockerTags({
     ? utils.compareSemVer(latestRelease, currentRelease) >= 0
     : false;
 
-  if (preset !== 'superset') {
+  // MGDIS publishes the lean image without a preset suffix.
+  if (preset !== 'lean') {
     tagChunks.push(preset);
   }
 

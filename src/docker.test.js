@@ -29,7 +29,7 @@ describe('getDockerTags', () => {
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:pr-${PR_ID}-arm`],
+      [`${REPO}:pr-${PR_ID}-superset-arm`],
     ],
     [
       'ci',
@@ -47,7 +47,7 @@ describe('getDockerTags', () => {
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:pr-${PR_ID}`],
+      [`${REPO}:pr-${PR_ID}-superset`],
     ],
     [
       'dev',
@@ -77,7 +77,7 @@ describe('getDockerTags', () => {
       'release',
       OLD_REL,
       false,
-      [`${REPO}:${OLD_REL}-arm`],
+      [`${REPO}:${OLD_REL}-superset-arm`],
     ],
     [
       'superset',
@@ -86,7 +86,7 @@ describe('getDockerTags', () => {
       'release',
       OLD_REL,
       false,
-      [`${REPO}:${OLD_REL}`],
+      [`${REPO}:${OLD_REL}-superset`],
     ],
     [
       'dev',
@@ -117,8 +117,8 @@ describe('getDockerTags', () => {
       NEW_REL,
       false,
       [
-        `${REPO}:${NEW_REL}-arm`,
-        `${REPO}:latest-arm`,
+        `${REPO}:${NEW_REL}-superset-arm`,
+        `${REPO}:latest-superset-arm`,
       ],
     ],
     [
@@ -128,7 +128,7 @@ describe('getDockerTags', () => {
       'release',
       NEW_REL,
       false,
-      [`${REPO}:${NEW_REL}`, `${REPO}:latest`],
+      [`${REPO}:${NEW_REL}-superset`, `${REPO}:latest-superset`],
     ],
     [
       'dev',
@@ -162,7 +162,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:master-arm`],
+      [`${REPO}:master-superset-arm`],
     ],
     [
       'superset',
@@ -171,7 +171,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:master`],
+      [`${REPO}:master-superset`],
     ],
     [
       'dev',
@@ -201,10 +201,10 @@ describe('getDockerTags', () => {
       'release',
       '4.0.0',
       true,
-      [`${REPO}:latest`, `${REPO}:4.0.0`],
+      [`${REPO}:latest-superset`, `${REPO}:4.0.0-superset`],
     ],
 
-    // lean now gets a `-lean` suffix, like every other non-`superset` preset
+    // MGDIS: lean has no suffix, every other preset gets one
     [
       'lean',
       ['linux/amd64'],
@@ -212,7 +212,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:master-lean`],
+      [`${REPO}:master`],
     ],
     [
       'lean',
@@ -221,7 +221,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:master-lean-arm`],
+      [`${REPO}:master-arm`],
     ],
     [
       'lean',
@@ -230,7 +230,7 @@ describe('getDockerTags', () => {
       'release',
       NEW_REL,
       false,
-      [`${REPO}:${NEW_REL}-lean`, `${REPO}:latest-lean`],
+      [`${REPO}:${NEW_REL}`, `${REPO}:latest`],
     ],
 
     // real release/master builds are multi-platform, published as a single
@@ -242,7 +242,7 @@ describe('getDockerTags', () => {
       'push',
       'master',
       false,
-      [`${REPO}:master`],
+      [`${REPO}:master-superset`],
     ],
 
   ])('returns expected tags', (preset, platforms, sha, buildContext, buildContextRef, forceLatest, expectedTags) => {
@@ -262,7 +262,7 @@ describe('getDockerCommand', () => {
       'push',
       'master',
       '',
-      ['--target superset', `-t ${REPO}:master `],
+      ['--target superset', `-t ${REPO}:master-superset `],
     ],
     [
       'lean',
@@ -271,7 +271,7 @@ describe('getDockerCommand', () => {
       'push',
       'master',
       '',
-      ['--target lean', `-t ${REPO}:master-lean `],
+      ['--target lean', `-t ${REPO}:master `],
     ],
     [
       'dev',
