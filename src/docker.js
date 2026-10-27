@@ -29,7 +29,7 @@ function makeDockerTag(parts) {
 }
 
 export function getDockerTags({
-  preset, platforms, sha, buildContext, buildContextRef, forceLatest = false, latestRelease = null,
+  preset, platforms, buildContext, buildContextRef, forceLatest = false, latestRelease = null,
 }) {
   const tags = new Set();
   const tagChunks = [];
@@ -38,6 +38,7 @@ export function getDockerTags({
     ? utils.compareSemVer(latestRelease, currentRelease) >= 0
     : false;
 
+  // MGDIS publishes the lean image without a preset suffix.
   if (preset !== 'lean') {
     tagChunks.push(preset);
   }
@@ -76,7 +77,9 @@ export async function getDockerCommand({
   let pyVer = BASE_PY_IMAGE;
   let dockerContext = '.';
 
-  if (preset === 'dev') {
+  if (preset === 'superset') {
+    buildTarget = 'superset';
+  } else if (preset === 'dev') {
     buildTarget = 'dev';
   } else if (preset === 'lean') {
     buildTarget = 'lean';
@@ -92,6 +95,9 @@ export async function getDockerCommand({
   } else if (preset === 'py311') {
     buildTarget = 'lean';
     pyVer = '3.11-slim-bookworm';
+  } else if (preset === 'py312') {
+    buildTarget = 'lean';
+    pyVer = '3.12-slim-bookworm';
   } else if (preset === 'websocket') {
     dockerContext = 'superset-websocket';
   } else if (preset === 'ci') {

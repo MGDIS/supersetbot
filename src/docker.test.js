@@ -23,13 +23,13 @@ describe('getDockerTags', () => {
   test.each([
     // PRs
     [
-      'lean',
+      'superset',
       ['linux/arm64'],
       SHA,
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:pr-${PR_ID}-arm`],
+      [`${REPO}:pr-${PR_ID}-superset-arm`],
     ],
     [
       'ci',
@@ -41,13 +41,13 @@ describe('getDockerTags', () => {
       [`${REPO}:pr-${PR_ID}-ci`],
     ],
     [
-      'lean',
+      'superset',
       ['linux/amd64'],
       SHA,
       'pull_request',
       PR_ID,
       false,
-      [`${REPO}:pr-${PR_ID}`],
+      [`${REPO}:pr-${PR_ID}-superset`],
     ],
     [
       'dev',
@@ -71,22 +71,22 @@ describe('getDockerTags', () => {
     ],
     // old releases
     [
-      'lean',
+      'superset',
       ['linux/arm64'],
       SHA,
       'release',
       OLD_REL,
       false,
-      [`${REPO}:${OLD_REL}-arm`],
+      [`${REPO}:${OLD_REL}-superset-arm`],
     ],
     [
-      'lean',
+      'superset',
       ['linux/amd64'],
       SHA,
       'release',
       OLD_REL,
       false,
-      [`${REPO}:${OLD_REL}`],
+      [`${REPO}:${OLD_REL}-superset`],
     ],
     [
       'dev',
@@ -110,25 +110,25 @@ describe('getDockerTags', () => {
     ],
     // new releases
     [
-      'lean',
+      'superset',
       ['linux/arm64'],
       SHA,
       'release',
       NEW_REL,
       false,
       [
-        `${REPO}:${NEW_REL}-arm`,
-        `${REPO}:latest-arm`,
+        `${REPO}:${NEW_REL}-superset-arm`,
+        `${REPO}:latest-superset-arm`,
       ],
     ],
     [
-      'lean',
+      'superset',
       ['linux/amd64'],
       SHA,
       'release',
       NEW_REL,
       false,
-      [`${REPO}:${NEW_REL}`, `${REPO}:latest`],
+      [`${REPO}:${NEW_REL}-superset`, `${REPO}:latest-superset`],
     ],
     [
       'dev',
@@ -156,22 +156,22 @@ describe('getDockerTags', () => {
     ],
     // merge on master
     [
-      'lean',
+      'superset',
       ['linux/arm64'],
       SHA,
       'push',
       'master',
       false,
-      [`${REPO}:master-arm`],
+      [`${REPO}:master-superset-arm`],
     ],
     [
-      'lean',
+      'superset',
       ['linux/amd64'],
       SHA,
       'push',
       'master',
       false,
-      [`${REPO}:master`],
+      [`${REPO}:master-superset`],
     ],
     [
       'dev',
@@ -195,13 +195,54 @@ describe('getDockerTags', () => {
     ],
 
     [
-      'lean',
+      'superset',
       ['linux/amd64'],
       SHA,
       'release',
       '4.0.0',
       true,
-      [`${REPO}:latest`, `${REPO}:4.0.0`],
+      [`${REPO}:latest-superset`, `${REPO}:4.0.0-superset`],
+    ],
+
+    // MGDIS: lean has no suffix, every other preset gets one
+    [
+      'lean',
+      ['linux/amd64'],
+      SHA,
+      'push',
+      'master',
+      false,
+      [`${REPO}:master`],
+    ],
+    [
+      'lean',
+      ['linux/arm64'],
+      SHA,
+      'push',
+      'master',
+      false,
+      [`${REPO}:master-arm`],
+    ],
+    [
+      'lean',
+      ['linux/amd64'],
+      SHA,
+      'release',
+      NEW_REL,
+      false,
+      [`${REPO}:${NEW_REL}`, `${REPO}:latest`],
+    ],
+
+    // real release/master builds are multi-platform, published as a single
+    // multi-arch manifest under the plain tag (no per-arch suffix at all)
+    [
+      'superset',
+      ['linux/arm64', 'linux/amd64'],
+      SHA,
+      'push',
+      'master',
+      false,
+      [`${REPO}:master-superset`],
     ],
 
   ])('returns expected tags', (preset, platforms, sha, buildContext, buildContextRef, forceLatest, expectedTags) => {
@@ -215,13 +256,22 @@ describe('getDockerTags', () => {
 describe('getDockerCommand', () => {
   test.each([
     [
+      'superset',
+      ['linux/amd64'],
+      SHA,
+      'push',
+      'master',
+      '',
+      ['--target superset', `-t ${REPO}:master-superset `],
+    ],
+    [
       'lean',
       ['linux/amd64'],
       SHA,
       'push',
       'master',
       '',
-      [`-t ${REPO}:master `],
+      ['--target lean', `-t ${REPO}:master `],
     ],
     [
       'dev',
